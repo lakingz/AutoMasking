@@ -96,6 +96,7 @@ if fpi is not None:
     cv2.arrowedLine(masked_image, pt2_longest, pt1_longest, (255, 0, 0), 2)  # Draw in blue
     cv2.imshow("Detected Circle", masked_image)
     cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 
 
