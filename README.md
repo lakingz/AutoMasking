@@ -9,10 +9,22 @@ This package contains python functions to create automatically masking for cartr
 3. The firing pin impression (purple)
 4. The firing pin drag (light blue)
 5. The direction of the firing pin drag (blue arrow)
+<figure align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./site/static/screenshot-dark.webp">
+    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picturetrain.png" style="width: 50%;">
+  </picture>
+  <figcaption>Example original image</figcaption>
+</figure>
 
-<img src="https://github.com/lakingz/AutoMasking/blob/master/images/Picturetrain.png" alt="Example original image" /></a>
+<figure align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./site/static/screenshot-dark.webp">
+    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picture4.png" style="width: 50%;">
+  </picture>
+  <figcaption>Example masked image</figcaption>
+</figure>
 
-<img src="https://github.com/lakingz/AutoMasking/blob/master/images/Picture4.png" alt="Example masked image" /></a>
 ### Dependencies
 
 numpy '1.26.3'   
