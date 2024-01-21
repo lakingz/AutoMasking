@@ -1,8 +1,16 @@
 import cv2
 import numpy as np
 
-image = cv2.imread('images/Picturetrain.png', cv2.IMREAD_GRAYSCALE)
-image_inner_ring = cv2.imread('images/Picturetrain.png', cv2.IMREAD_GRAYSCALE)
+#
+# replace 'images/Picturetrain.png' with 'file_directory'
+#
+image_path = 'images/Picturetrain.png'
+
+#
+#
+#
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+image_inner_ring = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 # Apply Gaussian Blur
 sigma = 25
 ksize = 2 * int(2 * sigma) + 1

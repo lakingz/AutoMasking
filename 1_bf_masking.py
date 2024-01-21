@@ -1,7 +1,14 @@
 import cv2
 import numpy as np
 
-image = cv2.imread('images/Picturetrain.png', cv2.IMREAD_GRAYSCALE)
+#
+# replace 'images/Picturetrain.png' with 'file_directory'
+#
+image_path = 'images/Picturetrain.png'
+#
+#
+#
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
 # Apply Gaussian Blur
 sigma = 25
@@ -25,3 +32,5 @@ contours[0].shape
 alpha = 0.5
 color_image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 masked_image = cv2.addWeighted(bf_mask, alpha, color_image, 1 - alpha, 0)
+cv2.imshow("masked_image", masked_image)
+cv2.waitKey(0)
