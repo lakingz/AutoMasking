@@ -9,20 +9,27 @@ This package contains python functions to create automatically masking for cartr
 3. The firing pin impression (purple)
 4. The firing pin drag (light blue)
 5. The direction of the firing pin drag (blue arrow)
+ 
+## Demo
+Example original image:
 <figure align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./site/static/screenshot-dark.webp">
-    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picturetrain.png" style="width: 50%;">
+    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picturetrain.png" style="width: 50%">
   </picture>
-  <figcaption>Example original image</figcaption>
 </figure>
 
+Example desired masked image:
 <figure align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./site/static/screenshot-dark.webp">
-    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picture4.png" style="width: 50%;">
+    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/Picture4.png" style="width: 50%">
   </picture>
-  <figcaption>Example masked image</figcaption>
+</figure>
+
+Resulting masked image:
+<figure align="center">
+  <picture>
+    <img alt="Impressive Profile READMEs Screenshot" src="https://github.com/lakingz/AutoMasking/blob/master/images/masked_image_20240121_110347.png" style="width: 50%">
+  </picture>
 </figure>
 
 ### Dependencies
