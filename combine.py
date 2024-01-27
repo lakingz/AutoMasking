@@ -14,6 +14,7 @@ ksize_1 = 2 * int(2 * sigma_1) + 1
 mask_value_3 = 255
 sigma_4 = 10
 ksize_4 = 2 * int(2 * sigma_4) + 1
+sigma_3 = 25
 alpha = 0.5      # transparency of overlay
 #
 #
@@ -99,6 +100,7 @@ if fpi is not None:
     masked_image = cv2.bitwise_or(blended_masked_area, unmasked_area)
     #
     # overlay the colored masking
+    #
     cv2.imshow("overlay colored masking", masked_image)
     cv2.waitKey(0)
 
