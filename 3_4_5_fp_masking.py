@@ -5,19 +5,28 @@ import numpy as np
 # replace 'images/Picturetrain.png' with 'file_directory'
 #
 image_path = 'images/Picturetrain.png'
+
+
+#
+# parameter specification
+#
+sigma_1 = 25
+ksize_1 = 2 * int(2 * sigma_1) + 1
+mask_value_3 = 255
+sigma_4 = 10
+ksize_4 = 2 * int(2 * sigma_4) + 1
+alpha = 0.5      # transparency of overlay
 #
 #
 #
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-image_inner_ring = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+image_inner_ring = image.copy()
 
 #
 # focus on inner ring
 #
 # Apply Gaussian Blur
-sigma = 25
-ksize = 2 * int(2 * sigma) + 1
-blurred = cv2.GaussianBlur(image, (ksize, ksize), sigma)
+blurred = cv2.GaussianBlur(image, (ksize_1, ksize_1), sigma_1)
 # Convert to binary image
 _, binary_image_outer_ring = cv2.threshold(blurred, 190, 255, cv2.THRESH_BINARY_INV)
 
@@ -26,18 +35,15 @@ contours, _ = cv2.findContours(binary_image_outer_ring, cv2.RETR_TREE, cv2.CHAIN
 num_of_contours = len(contours)
 
 inner_mask = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
-fill_color = [0, 0, 0]
 mask_value = 255
-cv2.fillPoly(inner_mask, [contours[num_of_contours-1]], mask_value)
-sel = inner_mask != mask_value
-image_inner_ring[sel] = mask_value
+cv2.fillPoly(inner_mask, [contours[num_of_contours-1]], mask_value_3)
+sel = inner_mask != mask_value_3
+image_inner_ring[sel] = mask_value_3
 
 #
 # 4.detect the firing pin drag
 #
-sigma = 10
-ksize = 2 * int(2 * sigma) + 1
-blurred = cv2.GaussianBlur(image_inner_ring, (ksize, ksize), sigma)
+blurred = cv2.GaussianBlur(image_inner_ring, (ksize_4, ksize_4), sigma_4)
 cv2.imshow("blurred", blurred)
 cv2.waitKey(0)
 # Convert to binary image
@@ -58,7 +64,6 @@ hull = cv2.convexHull(contours[1], returnPoints=True)
 fpi = cv2.HoughCircles(binary_image_fp,
                    cv2.HOUGH_GRADIENT, 1, 100, param1 = 1,
                param2 = 10, minRadius = 60, maxRadius = 100)
-fpi
 if fpi is not None:
     # Convert the circle parameters a, b and r to integers.
     fpi = np.uint16(np.around(fpi))
@@ -69,7 +74,6 @@ if fpi is not None:
 
     cv2.circle(bf_mask, (a, b), r, (200, 0, 200), -1)
     # overlay the color contour
-    alpha = 0.5
     color_image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
     masked_image = cv2.addWeighted(bf_mask, alpha, color_image, 1 - alpha, 0)
 

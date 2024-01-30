@@ -7,14 +7,21 @@ import numpy as np
 image_path = 'images/Picturetrain.png'
 
 #
+# parameter specification
+#
+sigma_1 = 25
+ksize_1 = 2 * int(2 * sigma_1) + 1
+mask_value_3 = 255
+sigma_4 = 10
+ksize_4 = 2 * int(2 * sigma_4) + 1
+alpha = 0.5      # transparency of overlay
+#
 #
 #
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-image_inner_ring = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+image_inner_ring = image.copy()
 # Apply Gaussian Blur
-sigma = 25
-ksize = 2 * int(2 * sigma) + 1
-blurred = cv2.GaussianBlur(image, (ksize, ksize), sigma)
+blurred = cv2.GaussianBlur(image, (ksize_1, ksize_1), sigma_1)
 
 #
 # 1. bf masking
@@ -40,18 +47,15 @@ if num_of_contours >= 1:
 # focus on inner ring
 #
 inner_zoom = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
-fill_color = [0, 0, 0]
-mask_value = 255
-cv2.fillPoly(inner_zoom, [contours[num_of_contours-1]], mask_value)
-sel = inner_zoom != mask_value
-image_inner_ring[sel] = mask_value
+cv2.fillPoly(inner_zoom, [contours[num_of_contours-1]], mask_value_3)
+sel = inner_zoom != mask_value_3
+image_inner_ring[sel] = mask_value_3
 
 #
 # 4.detect the firing pin drag
 #
-sigma = 10
-ksize = 2 * int(2 * sigma) + 1
-blurred = cv2.GaussianBlur(image_inner_ring, (ksize, ksize), sigma)
+
+blurred = cv2.GaussianBlur(image_inner_ring, (ksize_4, ksize_4), sigma_4)
 # Convert to binary image
 _, binary_image_fp = cv2.threshold(blurred, 120, 255, cv2.THRESH_BINARY)
 # find contour
@@ -59,7 +63,7 @@ contours, _ = cv2.findContours(binary_image_fp, cv2.RETR_TREE, cv2.CHAIN_APPROX_
 num_of_contours = len(contours)
 if num_of_contours >= 1:
     # color the contour into blue
-    cv2.drawContours(mask, [np.array(contours[1])], -1, (200,200,0), thickness=cv2.FILLED)  # black color
+    cv2.drawContours(mask, [np.array(contours[1])], -1, (200, 200, 0), thickness=cv2.FILLED)  # black color
 
 #(blue,green,red)
 
@@ -70,7 +74,6 @@ hull = cv2.convexHull(contours[1], returnPoints=True)
 fpi = cv2.HoughCircles(binary_image_fp,
                    cv2.HOUGH_GRADIENT, 1, 100, param1 = 1,
                param2 = 10, minRadius = 60, maxRadius = 100)
-fpi
 if fpi is not None:
     # Convert the circle parameters a, b and r to integers.
     fpi = np.uint16(np.around(fpi))
@@ -87,7 +90,6 @@ if fpi is not None:
     inverse_binary_mask = cv2.bitwise_not(binary_mask)
 
     # Blend the original image and the mask, applying the mask only where binary_mask is white
-    alpha = 0.5
     color_image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
     blended_masked_area = cv2.addWeighted(color_image, alpha, mask, 1 - alpha, 0)
     # Use the inverse binary mask to isolate unmasked areas from the original image

@@ -5,15 +5,20 @@ import numpy as np
 # replace 'images/Picturetrain.png' with 'file_directory'
 #
 image_path = 'images/Picturetrain.png'
+
+#
+# parameter specification
+#
+sigma_1 = 25
+ksize_1 = 2 * int(2 * sigma_1) + 1
+alpha = 0.5      # transparency of overlay
 #
 #
 #
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
 # Apply Gaussian Blur
-sigma = 25
-ksize = 2 * int(2 * sigma) + 1
-blurred = cv2.GaussianBlur(image, (ksize, ksize), sigma)
+blurred = cv2.GaussianBlur(image, (ksize_1, ksize_1), sigma_1)
 
 # Convert to binary image
 _, binary_image_outer_ring = cv2.threshold(blurred, 190, 255, cv2.THRESH_BINARY_INV)
@@ -29,7 +34,6 @@ if num_of_contours >= 1:
 
 contours[0].shape
 # overlay the color contour
-alpha = 0.5
 color_image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 masked_image = cv2.addWeighted(bf_mask, alpha, color_image, 1 - alpha, 0)
 cv2.imshow("masked_image", masked_image)
