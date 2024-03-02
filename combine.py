@@ -23,6 +23,7 @@ image_inner_ring = image.copy()
 # Apply Gaussian Blur
 blurred = cv2.GaussianBlur(image, (ksize_1, ksize_1), sigma_1)
 
+
 #
 # 1. bf masking
 #
